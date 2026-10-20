@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ko" class="font-[##_var_font_##]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>[##_page_title_##]</title>
+
+  <!-- 첫 화면 깜빡임 방지: CSS보다 먼저 테마 결정 -->
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('devlog-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark') {
+        t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    :root { --accent: [##_var_accent-color_##]; }
+  </style>
+
+  <!-- 코드 하이라이트 색상은 style.css에서 라이트/다크 모드별로 지정 -->
+  <s_if_var_code-highlight>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+  </s_if_var_code-highlight>
+</head>
+
+<body id="[##_body_id_##]">
+<s_t3>
+
+<s_if_var_show-progress>
+<div class="read-progress" aria-hidden="true"><span></span></div>
+</s_if_var_show-progress>
+
+<div class="layout">
+
+  <!-- ===================== 사이드바 ===================== -->
+  <aside class="sidebar" id="sidebar" aria-label="사이드바">
+    <div class="sidebar-inner">
+
+      <div class="profile">
+        <a href="[##_blog_link_##]" class="profile-image">
+          <img src="[##_image_##]" alt="" onerror="this.parentNode.classList.add('no-image');this.remove();">
+        </a>
+        <h1 class="blog-title"><a href="[##_blog_link_##]">[##_title_##]</a></h1>
+        <p class="blog-desc">[##_desc_##]</p>
+
+        <ul class="social">
+          <s_if_var_github-url>
+          <li><a href="[##_var_github-url_##]" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.77.11 3.06.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+          </a></li>
+          </s_if_var_github-url>
+          <s_if_var_linkedin-url>
+          <li><a href="[##_var_linkedin-url_##]" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+          </a></li>
+          </s_if_var_linkedin-url>
+          <s_if_var_email>
+          <li><a href="mailto:[##_var_email_##]" aria-label="Email">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+          </a></li>
+          </s_if_var_email>
+        </ul>
+      </div>
+
+      <div class="search-box">
+        <s_search>
+          <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="text" name="[##_search_name_##]" value="[##_search_text_##]" placeholder="검색어 입력 후 Enter" aria-label="블로그 검색" onkeypress="if (event.keyCode == 13) { [##_search_onclick_submit_##] }">
+        </s_search>
+      </div>
+
+      <s_sidebar>
+        <s_sidebar_element>
+          <!-- 카테고리 -->
+          <section class="widget widget-category">
+            <h2 class="widget-title">Categories</h2>
+            [##_category_list_##]
+          </section>
+        </s_sidebar_element>
+
+        <s_sidebar_element>
+          <!-- 최근 글 -->
+          <section class="widget widget-recent">
+            <h2 class="widget-title">Recent Posts</h2>
+            <ul>
+              <s_rctps_rep>
+              <li>
+                <a href="[##_rctps_rep_link_##]">[##_rctps_rep_title_##]</a>
+                <span class="meta">[##_rctps_rep_simple_date_##]</span>
+              </li>
+              </s_rctps_rep>
+            </ul>
+          </section>
+        </s_sidebar_element>
+
+        <s_sidebar_element>
+          <!-- 인기 글 -->
+          <section class="widget widget-recent">
+            <h2 class="widget-title">Popular</h2>
+            <ul>
+              <s_rctps_popular_rep>
+              <li>
+                <a href="[##_rctps_rep_link_##]">[##_rctps_rep_title_##]</a>
+                <span class="meta">[##_rctps_rep_simple_date_##]</span>
+              </li>
+              </s_rctps_popular_rep>
+            </ul>
+          </section>
+        </s_sidebar_element>
+
+        <s_sidebar_element>
+          <!-- 태그 -->
+          <section class="widget widget-tags">
+            <h2 class="widget-title">Tags</h2>
+            <div class="tag-chips">
+              <s_random_tags>
+              <a href="[##_tag_link_##]" class="[##_tag_class_##]">[##_tag_name_##]</a>
+              </s_random_tags>
+            </div>
+          </section>
+        </s_sidebar_element>
+
+        <s_sidebar_element>
+          <!-- 최근 댓글 -->
+          <section class="widget widget-comments">
+            <h2 class="widget-title">Comments</h2>
+            <ul>
+              <s_rctrp_rep>
+              <li>
+                <a href="[##_rctrp_rep_link_##]">[##_rctrp_rep_desc_##]</a>
+                <span class="meta">[##_rctrp_rep_name_##] · [##_rctrp_rep_time_##]</span>
+              </li>
+              </s_rctrp_rep>
+            </ul>
+          </section>
+        </s_sidebar_element>
+
+        <s_sidebar_element>
+          <!-- 방문자 수 -->
+          <section class="widget widget-counter">
+            <h2 class="widget-title">Visitors</h2>
+            <dl>
+              <div><dt>Today</dt><dd>[##_count_today_##]</dd></div>
+              <div><dt>Yesterday</dt><dd>[##_count_yesterday_##]</dd></div>
+              <div><dt>Total</dt><dd>[##_count_total_##]</dd></div>
+            </dl>
+          </section>
+        </s_sidebar_element>
+      </s_sidebar>
+
+    </div>
+  </aside>
+  <div class="sidebar-dim" data-sidebar-close></div>
+
+  <!-- ===================== 본문 영역 ===================== -->
+  <div class="main">
+
+    <header class="topbar">
+      <button type="button" class="icon-btn menu-btn" aria-label="메뉴 열기" aria-controls="sidebar" aria-expanded="false" data-sidebar-open>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <a href="[##_blog_link_##]" class="topbar-title">[##_title_##]</a>
+      <nav class="blog-menu" aria-label="블로그 메뉴">[##_blog_menu_##]</nav>
+      <button type="button" class="icon-btn theme-btn" aria-label="다크 모드 전환" data-theme-toggle>
+        <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+    </header>
+
+    <main class="content" id="content">
+
+      [##_revenue_list_upper_##]
+
+      <!-- 카테고리 / 태그 / 검색 목록 -->
+      <s_list>
+      <section class="list-section">
+        <header class="list-header">
+          <p class="list-kicker">Archive</p>
+          <h2 class="list-title">[##_list_conform_##] <span class="list-count">[##_list_count_##]</span></h2>
+        </header>
+        <ul class="post-list">
+          <s_list_rep>
+          <li class="post-item">
+            <div class="post-text">
+              <a href="[##_list_rep_category_link_##]" class="post-category">[##_list_rep_category_##]</a>
+              <h3 class="post-title"><a href="[##_list_rep_link_##]">[##_list_rep_title_text_##]</a></h3>
+              <p class="post-summary">[##_list_rep_summary_##]</p>
+              <p class="post-meta"><time>[##_list_rep_regdate_##]</time><span class="comment-count">[##_list_rep_rp_cnt_##]</span></p>
+            </div>
+            <s_list_rep_thumbnail>
+            <a href="[##_list_rep_link_##]" class="post-thumb" tabindex="-1" aria-hidden="true"><img src="[##_list_rep_thumbnail_##]" alt="" loading="lazy"></a>
+            </s_list_rep_thumbnail>
+          </li>
+          </s_list_rep>
+        </ul>
+        <s_list_empty>
+        <p class="empty">아직 글이 없어요.</p>
+        </s_list_empty>
+      </section>
+      </s_list>
+
+      <!-- 공지사항 -->
+      <s_notice_rep>
+        <s_index_article_rep>
+        <article class="post-item is-notice">
+          <div class="post-text">
+            <span class="post-category">Notice</span>
+            <h3 class="post-title"><a href="[##_notice_rep_link_##]">[##_notice_rep_title_##]</a></h3>
+            <p class="post-summary">[##_notice_rep_summary_##]</p>
+            <p class="post-meta"><time>[##_notice_rep_simple_date_##]</time></p>
+          </div>
+        </article>
+        </s_index_article_rep>
+        <s_permalink_article_rep>
+        <article class="entry">
+          <header class="entry-header">
+            <span class="entry-category">Notice</span>
+            <h2 class="entry-title">[##_notice_rep_title_##]</h2>
+            <p class="entry-meta"><time>[##_notice_rep_date_##]</time></p>
+          </header>
+          <div class="entry-content">[##_notice_rep_desc_##]</div>
+        </article>
+        </s_permalink_article_rep>
+      </s_notice_rep>
+
+      <!-- 보호글 -->
+      <s_article_protected>
+      <article class="entry entry-protected">
+        <header class="entry-header">
+          <a href="[##_article_rep_category_link_##]" class="entry-category">[##_article_rep_category_##]</a>
+          <h2 class="entry-title"><a href="[##_article_rep_link_##]">[##_article_rep_title_##]</a></h2>
+          <p class="entry-meta"><time>[##_article_rep_date_##]</time></p>
+        </header>
+        <div class="protected-box">
+          <p>🔒 보호된 글입니다. 내용을 보려면 비밀번호를 입력하세요.</p>
+          <div class="protected-form">
+            <label for="[##_article_password_##]" class="sr-only">비밀번호</label>
+            <input type="password" maxlength="16" id="[##_article_password_##]" name="[##_article_password_##]" placeholder="비밀번호" onkeydown="if (event.keyCode == 13)[##_article_dissolve_##]">
+            <button type="button" onclick="[##_article_dissolve_##]">확인</button>
+          </div>
+        </div>
+      </article>
+      </s_article_protected>
+
+      <!-- 글 -->
+      <s_article_rep>
+
+        <!-- 홈 목록 -->
+        <s_index_article_rep>
+        <article class="post-item">
+          <div class="post-text">
+            <a href="[##_article_rep_category_link_##]" class="post-category">[##_article_rep_category_##]</a>
+            <h3 class="post-title"><a href="[##_article_rep_link_##]">[##_article_rep_title_##]</a></h3>
+            <p class="post-summary">[##_article_rep_summary_##]</p>
+            <p class="post-meta"><time>[##_article_rep_simple_date_##]</time><s_rp_count><span class="comment-count">[##_article_rep_rp_cnt_##]</span></s_rp_count></p>
+          </div>
+          <s_article_rep_thumbnail>
+          <a href="[##_article_rep_link_##]" class="post-thumb" tabindex="-1" aria-hidden="true"><img src="[##_article_rep_thumbnail_url_##]" alt="" loading="lazy"></a>
+          </s_article_rep_thumbnail>
+        </article>
+        </s_index_article_rep>
+
+        <!-- 글 본문 -->
+        <s_permalink_article_rep>
+        <article class="entry">
+          <header class="entry-header">
+            <a href="[##_article_rep_category_link_##]" class="entry-category">[##_article_rep_category_##]</a>
+            <h2 class="entry-title">[##_article_rep_title_##]</h2>
+            <p class="entry-meta">
+              <span>[##_article_rep_author_##]</span>
+              <time>[##_article_rep_date_##]</time>
+              <span class="reading-time" data-reading-time></span>
+            </p>
+            <s_ad_div>
+            <div class="admin-actions">
+              <a href="[##_s_ad_m_link_##]">수정</a>
+              <a href="#" onclick="[##_s_ad_s2_onclick_##]; return false;">[##_s_ad_s2_label_##]</a>
+              <a href="#" onclick="[##_s_ad_d_onclick_##]; return false;">삭제</a>
+            </div>
+            </s_ad_div>
+          </header>
+
+          <s_if_var_show-toc>
+          <!-- 목차 리모컨: 넓은 화면에서는 오른쪽에 고정, 좁은 화면에서는 버튼으로 열기 -->
+          <button type="button" class="remote-fab" aria-label="목차 열기" aria-controls="remote" aria-expanded="false" data-remote-toggle>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg>
+          </button>
+          <aside class="remote" id="remote" aria-label="목차 리모컨" data-remote>
+            <div class="remote-head">
+              <p class="remote-title">목차</p>
+              <span class="remote-progress" data-remote-progress>0%</span>
+              <button type="button" class="remote-close" aria-label="목차 닫기" data-remote-toggle>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              </button>
+            </div>
+            <div class="remote-bar" aria-hidden="true"><span data-remote-bar></span></div>
+            <nav class="remote-body" aria-label="목차" data-toc hidden>
+              <ol class="toc-list"></ol>
+            </nav>
+            <div class="remote-actions">
+              <button type="button" data-remote-go="top" aria-label="맨 위로">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg><span>맨 위</span>
+              </button>
+              <button type="button" data-remote-go="comments" aria-label="댓글로">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>댓글</span>
+              </button>
+              <button type="button" data-remote-go="bottom" aria-label="맨 아래로">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg><span>맨 아래</span>
+              </button>
+            </div>
+          </aside>
+          </s_if_var_show-toc>
+
+          <div class="entry-content" data-entry-content>
+            [##_article_rep_desc_##]
+          </div>
+
+          <s_tag_label>
+          <div class="entry-tags">[##_tag_label_rep_##]</div>
+          </s_tag_label>
+
+          <nav class="entry-nav" aria-label="이전 글 다음 글">
+            <s_article_prev>
+            <a href="[##_article_prev_link_##]" class="nav-prev">
+              <span class="nav-label">← 이전 글</span>
+              <span class="nav-title">[##_article_prev_title_##]</span>
+            </a>
+            </s_article_prev>
+            <s_article_next>
+            <a href="[##_article_next_link_##]" class="nav-next">
+              <span class="nav-label">다음 글 →</span>
+              <span class="nav-title">[##_article_next_title_##]</span>
+            </a>
+            </s_article_next>
+          </nav>
+
+          <s_article_related>
+          <section class="related">
+            <h3 class="related-title">'[##_article_rep_category_##]'의 다른 글</h3>
+            <ul class="related-list">
+              <s_article_related_rep>
+              <li class="[##_article_related_rep_type_##]">
+                <a href="[##_article_related_rep_link_##]">
+                  <s_article_related_rep_thumbnail>
+                  <span class="related-thumb"><img src="[##_article_related_rep_thumbnail_link_##]" alt="" loading="lazy"></span>
+                  </s_article_related_rep_thumbnail>
+                  <span class="related-text">[##_article_related_rep_title_##]</span>
+                  <span class="related-date">[##_article_related_rep_date_##]</span>
+                </a>
+              </li>
+              </s_article_related_rep>
+            </ul>
+          </section>
+          </s_article_related>
+
+          <s_rp>
+          <section class="comments">
+            [##_comment_group_##]
+          </section>
+          </s_rp>
+        </article>
+        </s_permalink_article_rep>
+
+      </s_article_rep>
+
+      <!-- 페이지 (메뉴에 등록된 페이지) -->
+      <s_page_rep>
+      <article class="entry">
+        <header class="entry-header">
+          <h2 class="entry-title">[##_article_rep_title_##]</h2>
+        </header>
+        <div class="entry-content" data-entry-content>[##_article_rep_desc_##]</div>
+      </article>
+      </s_page_rep>
+
+      <!-- 태그 클라우드 -->
+      <s_tag>
+      <section class="list-section">
+        <header class="list-header">
+          <p class="list-kicker">Tags</p>
+          <h2 class="list-title">태그</h2>
+        </header>
+        <div class="tag-cloud">
+          <s_tag_rep>
+          <a href="[##_tag_link_##]" class="[##_tag_class_##]">[##_tag_name_##]</a>
+          </s_tag_rep>
+        </div>
+      </section>
+      </s_tag>
+
+      <!-- 방명록 -->
+      <s_guest>
+      <section class="list-section guestbook">
+        <header class="list-header">
+          <p class="list-kicker">Guestbook</p>
+          <h2 class="list-title">방명록</h2>
+        </header>
+        [##_guestbook_group_##]
+      </section>
+      </s_guest>
+
+      <!-- 페이지 이동 -->
+      <s_paging>
+      <nav class="pagination" aria-label="페이지 이동">
+        <a [##_prev_page_##] class="page-prev [##_no_more_prev_##]" aria-label="이전 페이지">‹</a>
+        <s_paging_rep>
+        <a [##_paging_rep_link_##] class="page-num">[##_paging_rep_link_num_##]</a>
+        </s_paging_rep>
+        <a [##_next_page_##] class="page-next [##_no_more_next_##]" aria-label="다음 페이지">›</a>
+      </nav>
+      </s_paging>
+
+      [##_revenue_list_lower_##]
+    </main>
+
+    <footer class="footer">
+      <p><s_if_var_footer-text>[##_var_footer-text_##]</s_if_var_footer-text><s_not_var_footer-text>© [##_blogger_##]</s_not_var_footer-text></p>
+      <p class="footer-sub">Powered by Tistory · DevLog skin</p>
+    </footer>
+  </div>
+</div>
+
+<button type="button" class="to-top" aria-label="맨 위로" data-to-top>
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
+</button>
+
+<!-- 스킨 스크립트 (테마 전환, 목차 리모컨, 코드 블록 등) -->
+<script>
+/* DevLog skin script */
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+  var body = document.body;
+
+  function $(sel, ctx) { return (ctx || document).querySelector(sel); }
+  function $$(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
+
+  /* ---------- 다크 모드 ---------- */
+  function storeTheme(t) { try { localStorage.setItem('devlog-theme', t); } catch (e) {} }
+  function savedTheme() { try { return localStorage.getItem('devlog-theme'); } catch (e) { return null; } }
+
+  var themeBtn = $('[data-theme-toggle]');
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      storeTheme(next);
+    });
+  }
+  // 사용자가 직접 고른 적이 없으면 OS 설정 변경을 따라감
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    var onChange = function (e) { if (!savedTheme()) root.setAttribute('data-theme', e.matches ? 'dark' : 'light'); };
+    if (mq.addEventListener) mq.addEventListener('change', onChange);
+    else if (mq.addListener) mq.addListener(onChange);
+  }
+
+  /* ---------- 모바일 사이드바 ---------- */
+  var openBtn = $('[data-sidebar-open]');
+  function setSidebar(open) {
+    body.classList.toggle('sidebar-open', open);
+    if (openBtn) openBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  if (openBtn) openBtn.addEventListener('click', function () { setSidebar(true); });
+  $$('[data-sidebar-close]').forEach(function (el) { el.addEventListener('click', function () { setSidebar(false); }); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setSidebar(false); });
+
+  /* ---------- 현재 메뉴/카테고리 표시 ---------- */
+  var path = decodeURIComponent(location.pathname).replace(/\/+$/, '');
+  $$('.widget-category a, .blog-menu a').forEach(function (a) {
+    var href = decodeURIComponent(a.getAttribute('href') || '').replace(/^https?:\/\/[^/]+/, '').replace(/\/+$/, '');
+    if (href && href === path) a.setAttribute('aria-current', 'page');
+  });
+
+  /* ---------- 코드 블록 ---------- */
+  var content = $('[data-entry-content]');
+
+  function enhanceCode() {
+    if (!content) return;
+    $$('pre', content).forEach(function (pre) {
+      if (pre.parentNode.classList.contains('code-block')) return;
+      var code = $('code', pre);
+      if (!code) return;
+
+      // 티스토리 에디터 코드블록: <pre data-ke-language="javascript" class="javascript"><code>
+      var lang = pre.getAttribute('data-ke-language') || (pre.className.match(/\b([a-z0-9+#-]+)\b/i) || [])[1] || '';
+
+      if (window.hljs && !code.classList.contains('hljs')) {
+        if (lang && lang !== 'plain' && window.hljs.getLanguage(lang)) code.classList.add('language-' + lang);
+        if (lang !== 'plain' && lang !== 'text') {
+          try { window.hljs.highlightElement(code); } catch (e) {}
+        }
+      }
+
+      var wrap = document.createElement('div');
+      wrap.className = 'code-block';
+      var head = document.createElement('div');
+      head.className = 'code-head';
+      head.innerHTML = '<span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="code-lang"></span><button type="button" class="code-copy">Copy</button>';
+      $('.code-lang', head).textContent = lang && lang !== 'plain' ? lang : '';
+      pre.parentNode.insertBefore(wrap, pre);
+      wrap.appendChild(head);
+      wrap.appendChild(pre);
+
+      var btn = $('.code-copy', head);
+      btn.addEventListener('click', function () {
+        var text = code.innerText;
+        var done = function () {
+          btn.textContent = 'Copied!';
+          btn.classList.add('copied');
+          setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1600);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+        } else { fallbackCopy(text); done(); }
+      });
+    });
+  }
+
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    body.removeChild(ta);
+  }
+
+  /* ---------- 목차 ---------- */
+  function buildToc() {
+    var toc = $('[data-toc]');
+    if (!toc || !content) return;
+    var heads = $$('h2, h3, h4', content).filter(function (h) { return h.textContent.trim(); });
+    if (heads.length < 2) return;
+
+    var list = $('.toc-list', toc);
+    var used = {};
+    var links = [];
+    heads.forEach(function (h, i) {
+      var text = h.textContent.trim();
+      if (!h.id) {
+        var id = text.toLowerCase().replace(/[^\w가-힣\s-]/g, '').trim().replace(/\s+/g, '-') || 'section-' + i;
+        while (used[id]) id += '-' + i;
+        h.id = id;
+      }
+      used[h.id] = true;
+
+      var anchor = document.createElement('a');
+      anchor.className = 'anchor';
+      anchor.href = '#' + encodeURIComponent(h.id);
+      anchor.setAttribute('aria-hidden', 'true');
+      anchor.textContent = '#';
+      h.appendChild(anchor);
+
+      var li = document.createElement('li');
+      li.className = 'lv-' + h.tagName.charAt(1);
+      var a = document.createElement('a');
+      a.href = '#' + encodeURIComponent(h.id);
+      a.textContent = text;
+      li.appendChild(a);
+      list.appendChild(li);
+      links.push({ head: h, link: a });
+    });
+
+    toc.hidden = false;
+
+    // 목차 클릭 → 해당 제목으로 부드럽게 이동
+    links.forEach(function (item) {
+      item.link.addEventListener('click', function (e) {
+        e.preventDefault();
+        scrollToEl(item.head);
+        try { history.replaceState(null, '', '#' + encodeURIComponent(item.head.id)); } catch (err) {}
+        setActive(item);
+        if (!remote.docked) remote.set(false);
+      });
+    });
+
+    // 스크롤 위치에 맞춰 현재 섹션 강조
+    var current = null;
+    function setActive(item) {
+      if (item === current) return;
+      if (current) current.link.classList.remove('active');
+      item.link.classList.add('active');
+      current = item;
+      // 리모컨 목록이 길면 현재 항목이 보이도록 스크롤
+      var box = toc, r = item.link.getBoundingClientRect(), b = box.getBoundingClientRect();
+      if (r.top < b.top || r.bottom > b.bottom) box.scrollTop += r.top - b.top - b.height / 2 + r.height / 2;
+    }
+    function spy() {
+      var y = window.scrollY + 100;
+      var active = links[0];
+      for (var i = 0; i < links.length; i++) {
+        if (links[i].head.getBoundingClientRect().top + window.scrollY <= y) active = links[i];
+        else break;
+      }
+      setActive(active);
+    }
+    window.addEventListener('scroll', throttle(spy, 80), { passive: true });
+    spy();
+  }
+
+  /* ---------- 읽기 시간 ---------- */
+  function readingTime() {
+    var el = $('[data-reading-time]');
+    if (!el || !content) return;
+    var text = content.innerText || '';
+    var chars = text.replace(/\s+/g, '').length;
+    var mins = Math.max(1, Math.round(chars / 500)); // 한국어 기준 분당 약 500자
+    el.textContent = mins + '분 읽기';
+  }
+
+  /* ---------- 목차 리모컨 ---------- */
+  // 넓은 화면(1360px 이상): 오른쪽에 고정(docked), 닫으면 버튼으로 접힘 — 선택은 기억
+  // 좁은 화면: 오른쪽 아래 버튼을 누르면 떠오르고, 목차를 누르면 닫힘
+  var remote = (function () {
+    var el = $('[data-remote]');
+    var api = { docked: false, set: function () {} };
+    if (!el) return api;
+
+    var wide = window.matchMedia('(min-width: 1360px)');
+    var fab = $('.remote-fab');
+    var open = false;
+    function pref() { try { return localStorage.getItem('devlog-remote'); } catch (e) { return null; } }
+    function savePref(v) { try { localStorage.setItem('devlog-remote', v); } catch (e) {} }
+
+    function apply() {
+      el.classList.toggle('open', open);
+      body.classList.toggle('remote-open', open);
+      api.docked = wide.matches && open;
+      body.classList.toggle('remote-docked', api.docked);
+      if (fab) fab.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    api.set = function (v, remember) {
+      open = v;
+      if (remember && wide.matches) savePref(v ? 'open' : 'closed');
+      apply();
+    };
+    function reset() { api.set(wide.matches && pref() !== 'closed'); }
+
+    body.classList.add('has-remote');
+    $$('[data-remote-toggle]').forEach(function (b) {
+      b.addEventListener('click', function () { api.set(!open, true); });
+    });
+    if (wide.addEventListener) wide.addEventListener('change', reset);
+    else if (wide.addListener) wide.addListener(reset);
+
+    // 좁은 화면에서 바깥을 누르거나 Esc를 누르면 닫기
+    document.addEventListener('click', function (e) {
+      if (open && !wide.matches && !el.contains(e.target) && !(fab && fab.contains(e.target))) api.set(false);
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && open && !wide.matches) api.set(false); });
+
+    // 맨 위 / 댓글 / 맨 아래
+    $$('[data-remote-go]', el).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var where = b.getAttribute('data-remote-go');
+        if (where === 'top') window.scrollTo({ top: 0, behavior: 'smooth' });
+        else if (where === 'bottom') window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+        else {
+          var c = $('.comments') || $('[data-tistory-react-app="Comment"]');
+          if (c) scrollToEl(c);
+        }
+        if (!api.docked) api.set(false);
+      });
+    });
+
+    reset();
+    return api;
+  })();
+
+  /* ---------- 진행바 & 맨 위로 ---------- */
+  var bar = $('.read-progress span');
+  var remoteBar = $('[data-remote-bar]');
+  var remotePct = $('[data-remote-progress]');
+  var toTop = $('[data-to-top]');
+  function onScroll() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = h > 0 ? Math.min(100, Math.max(0, (window.scrollY / h) * 100)) : 0;
+    if (bar) bar.style.width = pct + '%';
+    if (remoteBar) remoteBar.style.width = pct + '%';
+    if (remotePct) remotePct.textContent = Math.round(pct) + '%';
+    if (toTop) toTop.classList.toggle('show', window.scrollY > 600);
+  }
+  window.addEventListener('scroll', throttle(onScroll, 30), { passive: true });
+  onScroll();
+  if (toTop) toTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+  // 상단 바 높이만큼 여유를 두고 부드럽게 이동
+  function scrollToEl(el) {
+    var top = el.getBoundingClientRect().top + window.scrollY - 76;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  }
+
+  // 일정 간격으로 실행하되, 스크롤이 멈춘 뒤 한 번 더 실행해 마지막 위치를 놓치지 않음
+  function throttle(fn, wait) {
+    var t = 0, timer = null;
+    return function () {
+      var now = Date.now();
+      clearTimeout(timer);
+      if (now - t >= wait) { t = now; fn(); }
+      else timer = setTimeout(function () { t = Date.now(); fn(); }, wait);
+    };
+  }
+
+  /* ---------- 실행 ---------- */
+  buildToc();
+  readingTime();
+  // highlight.js는 defer로 로드되므로 DOMContentLoaded 이후 실행
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', enhanceCode);
+  else enhanceCode();
+})();
+</script>
+</s_t3>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<skin>
+  <information>
+    <name>DevLog</name>
+    <version>1.0.0</version>
+    <description>
+      <![CDATA[개발 블로그를 위한 2단(왼쪽 사이드바) 스킨. 다크 모드, 자동 목차, 코드 하이라이트·복사 버튼, 읽기 진행바를 지원합니다.]]>
+    </description>
+    <license>
+      <![CDATA[자유롭게 수정 및 사용할 수 있습니다.]]>
+    </license>
+  </information>
+  <author>
+    <name>DevLog</name>
+    <homepage></homepage>
+    <email></email>
+  </author>
+  <default>
+    <recentEntries>5</recentEntries>
+    <recentComments>5</recentComments>
+    <recentTrackbacks>5</recentTrackbacks>
+    <itemsOnGuestbook>10</itemsOnGuestbook>
+    <tagsInCloud>20</tagsInCloud>
+    <sortInCloud>1</sortInCloud>
+    <expandComment>1</expandComment>
+    <expandTrackback>0</expandTrackback>
+    <lengthOfRecentNotice>30</lengthOfRecentNotice>
+    <lengthOfRecentEntry>40</lengthOfRecentEntry>
+    <lengthOfRecentComment>30</lengthOfRecentComment>
+    <lengthOfRecentTrackback>30</lengthOfRecentTrackback>
+    <lengthOfLink>30</lengthOfLink>
+    <showListOnCategory>1</showListOnCategory>
+    <showListOnArchive>1</showListOnArchive>
+    <showListOnTag>1</showListOnTag>
+    <showListOnSearch>1</showListOnSearch>
+    <commentMessage>
+      <none><![CDATA[]]></none>
+      <single><![CDATA[1]]></single>
+    </commentMessage>
+    <trackbackMessage>
+      <none><![CDATA[]]></none>
+      <single><![CDATA[]]></single>
+    </trackbackMessage>
+    <tree>
+      <color>1f2328</color>
+      <bgColor>ffffff</bgColor>
+      <activeColor>3182f6</activeColor>
+      <activeBgColor>ffffff</activeBgColor>
+      <labelLength>30</labelLength>
+      <showValue>1</showValue>
+    </tree>
+    <contentWidth>760</contentWidth>
+    <entriesOnPage>10</entriesOnPage>
+    <entriesOnList>10</entriesOnList>
+  </default>
+
+  <variables>
+    <variablegroup name="디자인">
+      <variable>
+        <name>accent-color</name>
+        <label><![CDATA[포인트 색상]]></label>
+        <description><![CDATA[링크, 카테고리, 목차 강조 등에 쓰이는 대표 색입니다.]]></description>
+        <type>COLOR</type>
+        <option />
+        <default><![CDATA[#3182f6]]></default>
+      </variable>
+      <variable>
+        <name>font</name>
+        <label><![CDATA[본문 글꼴]]></label>
+        <type>SELECT</type>
+        <option><![CDATA[
+          [
+            {"name":"pretendard", "label":"Pretendard", "value":"pretendard"},
+            {"name":"noto", "label":"Noto Sans KR", "value":"noto"},
+            {"name":"system", "label":"시스템 기본 글꼴", "value":"system"}
+          ]
+        ]]></option>
+        <default>pretendard</default>
+      </variable>
+    </variablegroup>
+
+    <variablegroup name="글 화면">
+      <variable>
+        <name>show-toc</name>
+        <label><![CDATA[목차 리모컨]]></label>
+        <description><![CDATA[본문의 제목1~3으로 목차를 만들어 오른쪽에 리모컨으로 띄웁니다. 맨 위/댓글/맨 아래 이동 버튼이 함께 표시됩니다.]]></description>
+        <type>BOOL</type>
+        <option />
+        <default>true</default>
+      </variable>
+      <variable>
+        <name>code-highlight</name>
+        <label><![CDATA[코드 하이라이트]]></label>
+        <description><![CDATA[highlight.js로 코드블록에 색을 입힙니다.]]></description>
+        <type>BOOL</type>
+        <option />
+        <default>true</default>
+      </variable>
+      <variable>
+        <name>show-progress</name>
+        <label><![CDATA[읽기 진행바]]></label>
+        <type>BOOL</type>
+        <option />
+        <default>true</default>
+      </variable>
+    </variablegroup>
+
+    <variablegroup name="프로필">
+      <variable>
+        <name>github-url</name>
+        <label><![CDATA[GitHub 주소]]></label>
+        <description><![CDATA[예: https://github.com/username (비워두면 숨김)]]></description>
+        <type>STRING</type>
+        <option />
+        <default></default>
+      </variable>
+      <variable>
+        <name>linkedin-url</name>
+        <label><![CDATA[LinkedIn 주소]]></label>
+        <type>STRING</type>
+        <option />
+        <default></default>
+      </variable>
+      <variable>
+        <name>email</name>
+        <label><![CDATA[이메일]]></label>
+        <type>STRING</type>
+        <option />
+        <default></default>
+      </variable>
+      <variable>
+        <name>footer-text</name>
+        <label><![CDATA[푸터 문구]]></label>
+        <description><![CDATA[비워두면 "© 필명"이 표시됩니다.]]></description>
+        <type>STRING</type>
+        <option />
+        <default></default>
+      </variable>
+    </variablegroup>
+  </variables>
+</skin>
