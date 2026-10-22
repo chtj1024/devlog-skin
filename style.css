@@ -272,6 +272,8 @@ body:not(#tt-body-page) .read-progress { display: none; }
 }
 .list-count:empty { display: none; }
 #tt-body-index .list-header { display: none; }
+/* 카테고리·태그·검색·아카이브: 티스토리가 목록(s_list)과 글 카드(s_index_article_rep)를 함께 출력하므로 카드 쪽을 숨김 */
+body:not(#tt-body-index) .content:has(.list-section) .index-card { display: none; }
 
 .post-list { list-style: none; }
 .post-item {
