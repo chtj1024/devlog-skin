@@ -181,6 +181,114 @@
 
       [##_revenue_list_upper_##]
 
+      <!-- 홈 커버 (꾸미기 > 홈 화면 설정에서 커버를 추가하면 홈 첫 페이지에 표시) -->
+      <s_cover_group>
+      <div class="cover-group">
+
+        <s_if_var_show-hero>
+        <section class="cover cover-hero">
+          <div class="hero">
+            <p class="hero-prompt"><b>~/devlog</b> $ whoami</p>
+            <h2 class="hero-title">안녕하세요, <em>[##_blogger_##]</em>입니다<span class="cursor" aria-hidden="true"></span></h2>
+            <p class="hero-desc">[##_var_hero-desc_##]</p>
+            <ul class="hero-stack" data-hero-tags="[##_var_hero-tags_##]"></ul>
+            <dl class="hero-stats">
+              <div data-stat="posts" hidden><dd></dd><dt>Posts</dt></div>
+              <div data-stat="categories" hidden><dd></dd><dt>Categories</dt></div>
+              <div><dd>[##_count_total_##]</dd><dt>Visitors</dt></div>
+            </dl>
+            <div class="hero-cta">
+              <a href="/category" class="btn btn-primary">전체 글 보기</a>
+              <s_if_var_github-url><a href="[##_var_github-url_##]" class="btn" target="_blank" rel="noopener">GitHub</a></s_if_var_github-url>
+            </div>
+          </div>
+        </section>
+        </s_if_var_show-hero>
+
+        <s_cover_rep>
+
+          <!-- 추천 글 -->
+          <s_cover name="featured">
+          <section class="cover cover-featured">
+            <div class="cover-head">
+              <div><p class="cover-kicker">Featured</p><h2 class="cover-title">[##_cover_title_##]</h2></div>
+              <s_cover_url><a href="[##_cover_url_##]" class="cover-more">더보기 →</a></s_cover_url>
+            </div>
+            <div class="featured">
+              <s_cover_item>
+              <article class="card">
+                <a href="[##_cover_item_url_##]" class="thumb" tabindex="-1" aria-hidden="true">
+                  <span class="thumb-label">[##_cover_item_category_##]</span>
+                  <s_cover_item_thumbnail><img src="[##_cover_item_thumbnail_##]" alt="" loading="lazy"></s_cover_item_thumbnail>
+                </a>
+                <div class="card-body">
+                  <span class="card-cat">[##_cover_item_category_##]</span>
+                  <h3 class="card-title"><a href="[##_cover_item_url_##]">[##_cover_item_title_##]</a></h3>
+                  <p class="card-summary">[##_cover_item_summary_##]</p>
+                  <p class="card-meta">[##_cover_item_date_##]</p>
+                </div>
+              </article>
+              </s_cover_item>
+            </div>
+          </section>
+          </s_cover>
+
+          <!-- 카테고리 박스 -->
+          <s_cover name="catbox">
+          <section class="cover cover-catbox">
+            <div class="cat-box">
+              <h3>[##_cover_title_##] <s_cover_url><a href="[##_cover_url_##]">전체 →</a></s_cover_url></h3>
+              <ul>
+                <s_cover_item>
+                <li><a href="[##_cover_item_url_##]">[##_cover_item_title_##]</a><time>[##_cover_item_date_##]</time></li>
+                </s_cover_item>
+              </ul>
+            </div>
+          </section>
+          </s_cover>
+
+          <!-- 썸네일 그리드 -->
+          <s_cover name="grid">
+          <section class="cover cover-grid">
+            <div class="cover-head">
+              <div><p class="cover-kicker">Latest</p><h2 class="cover-title">[##_cover_title_##]</h2></div>
+              <s_cover_url><a href="[##_cover_url_##]" class="cover-more">더보기 →</a></s_cover_url>
+            </div>
+            <div class="grid">
+              <s_cover_item>
+              <article class="card">
+                <a href="[##_cover_item_url_##]" class="thumb" tabindex="-1" aria-hidden="true">
+                  <span class="thumb-label">[##_cover_item_category_##]</span>
+                  <s_cover_item_thumbnail><img src="[##_cover_item_thumbnail_##]" alt="" loading="lazy"></s_cover_item_thumbnail>
+                </a>
+                <span class="card-cat">[##_cover_item_category_##]</span>
+                <h3 class="card-title"><a href="[##_cover_item_url_##]">[##_cover_item_title_##]</a></h3>
+                <p class="card-meta">[##_cover_item_date_##]</p>
+              </article>
+              </s_cover_item>
+            </div>
+          </section>
+          </s_cover>
+
+        </s_cover_rep>
+
+        <s_if_var_show-home-tags>
+        <section class="cover cover-tags">
+          <div class="cover-head">
+            <div><p class="cover-kicker">Tags</p><h2 class="cover-title">자주 쓰는 태그</h2></div>
+            <a href="/tag" class="cover-more">전체 태그 →</a>
+          </div>
+          <div class="tag-chips">
+            <s_random_tags>
+            <a href="[##_tag_link_##]" class="[##_tag_class_##]">[##_tag_name_##]</a>
+            </s_random_tags>
+          </div>
+        </section>
+        </s_if_var_show-home-tags>
+
+      </div>
+      </s_cover_group>
+
       <!-- 카테고리 / 태그 / 검색 목록 -->
       <s_list>
       <section class="list-section">
@@ -716,7 +824,39 @@
     };
   }
 
+  /* ---------- 홈 커버 소개 영역 ---------- */
+  function buildHero() {
+    var hero = $('.cover-hero');
+    if (!hero) return;
+
+    // 소개 태그: 쉼표로 구분된 스킨 옵션 값을 칩으로
+    var stack = $('[data-hero-tags]', hero);
+    var tags = (stack.getAttribute('data-hero-tags') || '').split(',');
+    tags.forEach(function (t) {
+      t = t.trim();
+      if (!t) return;
+      var li = document.createElement('li');
+      li.textContent = t;
+      stack.appendChild(li);
+    });
+    if (!stack.children.length) stack.remove();
+
+    // 글 수·카테고리 수는 사이드바 카테고리 위젯에서 읽음 (위젯이 없으면 숨김 유지)
+    var total = $('.widget-category .link_tit .c_cnt');
+    var count = total && total.textContent.replace(/[^0-9]/g, '');
+    if (count) showStat('posts', Number(count).toLocaleString());
+    var cats = $$('.widget-category .category_list > li').length;
+    if (cats) showStat('categories', cats);
+
+    function showStat(name, value) {
+      var el = $('[data-stat="' + name + '"]', hero);
+      $('dd', el).textContent = value;
+      el.hidden = false;
+    }
+  }
+
   /* ---------- 실행 ---------- */
+  buildHero();
   buildToc();
   readingTime();
   // highlight.js는 defer로 로드되므로 DOMContentLoaded 이후 실행

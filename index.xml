@@ -105,6 +105,40 @@
       </variable>
     </variablegroup>
 
+    <variablegroup name="홈 화면">
+      <variable>
+        <name>show-hero</name>
+        <label><![CDATA[소개 영역]]></label>
+        <description><![CDATA[홈 커버를 사용할 때 맨 위에 블로그 소개 영역을 표시합니다.]]></description>
+        <type>BOOL</type>
+        <option />
+        <default>true</default>
+      </variable>
+      <variable>
+        <name>hero-desc</name>
+        <label><![CDATA[소개 문구]]></label>
+        <type>STRING</type>
+        <option />
+        <default><![CDATA[IT 전반에 대해 공부하며 배운 것과 삽질한 것을 기록하고 있어요.]]></default>
+      </variable>
+      <variable>
+        <name>hero-tags</name>
+        <label><![CDATA[소개 태그]]></label>
+        <description><![CDATA[쉼표(,)로 구분해 입력합니다. 예: React, Spring, AI · LLM]]></description>
+        <type>STRING</type>
+        <option />
+        <default><![CDATA[React, TypeScript, Spring, Java, Python, AI · LLM, Algorithm, Database, Network, OS, Cloud, DevOps, Git, Security]]></default>
+      </variable>
+      <variable>
+        <name>show-home-tags</name>
+        <label><![CDATA[태그 모음]]></label>
+        <description><![CDATA[홈 커버 맨 아래에 태그 모음을 표시합니다.]]></description>
+        <type>BOOL</type>
+        <option />
+        <default>true</default>
+      </variable>
+    </variablegroup>
+
     <variablegroup name="프로필">
       <variable>
         <name>github-url</name>
@@ -138,4 +172,22 @@
       </variable>
     </variablegroup>
   </variables>
+
+  <cover>
+    <item>
+      <name>featured</name>
+      <label><![CDATA[추천 글]]></label>
+      <description><![CDATA[첫 번째 글을 크게, 나머지 글(2~3개 권장)을 옆에 작게 보여줍니다.]]></description>
+    </item>
+    <item>
+      <name>catbox</name>
+      <label><![CDATA[카테고리 박스]]></label>
+      <description><![CDATA[글 제목과 날짜만 담은 박스입니다. 연달아 추가하면 두 개씩 나란히 배치됩니다.]]></description>
+    </item>
+    <item>
+      <name>grid</name>
+      <label><![CDATA[썸네일 그리드]]></label>
+      <description><![CDATA[썸네일 카드를 3열 격자로 보여줍니다. 3의 배수 개수를 권장합니다.]]></description>
+    </item>
+  </cover>
 </skin>
