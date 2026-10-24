@@ -391,8 +391,9 @@
             </p>
             <s_ad_div>
             <div class="admin-actions">
+              <span class="visibility-badge" data-visibility-badge hidden></span>
               <a href="[##_s_ad_m_link_##]">수정</a>
-              <a href="#" onclick="[##_s_ad_s2_onclick_##]; return false;">[##_s_ad_s2_label_##]</a>
+              <a href="#" onclick="[##_s_ad_s2_onclick_##]; return false;" data-visibility-toggle>[##_s_ad_s2_label_##]</a>
               <a href="#" onclick="[##_s_ad_d_onclick_##]; return false;">삭제</a>
             </div>
             </s_ad_div>
@@ -855,7 +856,27 @@
     }
   }
 
+  /* ---------- 글 공개 상태 배지 (관리자 메뉴 안에서만 출력됨) ---------- */
+  // 티스토리 공개/비공개 버튼 문구는 '누르면 바뀔 상태'이므로 현재 상태는 그 반대
+  function markVisibility() {
+    var toggle = $('[data-visibility-toggle]');
+    var badge = $('[data-visibility-badge]');
+    if (!toggle || !badge) return;
+    var label = toggle.textContent.trim();
+    var isPublic;
+    if (label.indexOf('비공개') !== -1) isPublic = true;
+    else if (label.indexOf('공개') !== -1) isPublic = false;
+    else return;
+
+    badge.textContent = isPublic ? '공개 중' : '비공개 글';
+    badge.classList.add(isPublic ? 'is-public' : 'is-private');
+    badge.hidden = false;
+    toggle.textContent = isPublic ? '비공개로 전환' : '공개로 전환';
+    if (!isPublic) body.classList.add('is-private-entry');
+  }
+
   /* ---------- 실행 ---------- */
+  markVisibility();
   buildHero();
   buildToc();
   readingTime();

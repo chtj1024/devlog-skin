@@ -453,6 +453,22 @@ body:not(#tt-body-page) .read-progress { display: none; }
 .admin-actions { display: flex; gap: 6px; margin-top: 16px; }
 .admin-actions a { padding: 4px 10px; font-size: 13px; color: var(--muted); border: 1px solid var(--border); border-radius: 6px; }
 .admin-actions a:hover { color: var(--text); border-color: var(--muted); }
+.admin-actions { flex-wrap: wrap; align-items: center; }
+
+/* 공개 상태 배지 (관리자에게만 보임) */
+.visibility-badge {
+  display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
+  font-size: 13px; font-weight: 700; border-radius: 6px; border: 1px solid;
+}
+.visibility-badge[hidden] { display: none; }
+.visibility-badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.visibility-badge.is-public { color: #1a7f37; background: rgba(46, 160, 67, .12); border-color: rgba(46, 160, 67, .35); }
+.visibility-badge.is-private { color: #cf222e; background: rgba(248, 81, 73, .12); border-color: rgba(248, 81, 73, .4); }
+.visibility-badge.is-private::before { content: "🔒"; width: auto; height: auto; background: none; font-size: 12px; }
+:root[data-theme="dark"] .visibility-badge.is-public { color: #3fb950; }
+:root[data-theme="dark"] .visibility-badge.is-private { color: #ff7b72; }
+/* 비공개 글은 제목 위에 띠를 둘러 한눈에 보이게 */
+.is-private-entry .entry-header { border-top: 3px solid rgba(248, 81, 73, .6); padding-top: 20px; }
 
 /* 본문 타이포그래피 (티스토리 에디터 출력) */
 .entry-content { font-size: 16.5px; line-height: 1.85; color: var(--text-sub); }
