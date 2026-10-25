@@ -718,6 +718,9 @@ body.has-remote.remote-open .to-top { display: none; } /* 리모컨에 '맨 위'
 .nav-label { font-size: 12px; color: var(--muted); }
 .nav-title { font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+/* 티스토리가 본문 끝에 자동으로 넣는 "카테고리의 다른 글" 박스는 숨김 (아래 스킨 자체 영역만 사용) */
+.another_category { display: none !important; }
+
 .related { margin: 48px 0 0; }
 .related-title { margin: 0 0 14px; font-size: 17px; font-weight: 700; }
 .related-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
